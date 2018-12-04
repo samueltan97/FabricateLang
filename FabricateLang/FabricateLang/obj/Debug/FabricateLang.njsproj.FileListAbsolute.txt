@@ -1,0 +1,3 @@
+C:\Users\Samuel Tan\Desktop\FabricateLang\FabricateLang\FabricateLang\obj\Debug\FabricateLang.njsprojAssemblyReference.cache
+C:\Users\Samuel Tan\Desktop\FabricateLang\FabricateLang\FabricateLang\obj\Debug\FabricateLang.njsproj.CoreCompileInputs.cache
+C:\Users\Samuel Tan\Desktop\FabricateLang\FabricateLang\FabricateLang\bin\Microsoft.NodejsTools.WebRole.dll
