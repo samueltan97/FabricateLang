@@ -14,4 +14,16 @@ function flipHorizontally(id, time, animation, canSkip, promise) {
     }, time, animation, promise());
 }
 exports.flipHorizontally = flipHorizontally;
+function flipVertically(id, time, animation, canSkip, promise) {
+    $("#" + id).animate({
+        "transform": "scaleY(-1)"
+    }, time, animation, promise());
+}
+exports.flipVertically = flipVertically;
+function scaleSprite(id, scaleX, scaleY, time, animation, canSkip, promise) {
+    $("#" + id).animate({
+        "transform": "scale(" + scaleX + ", " + scaleY + ")"
+    }, time, animation, promise());
+}
+exports.scaleSprite = scaleSprite;
 //# sourceMappingURL=CSSAnimation.js.map
