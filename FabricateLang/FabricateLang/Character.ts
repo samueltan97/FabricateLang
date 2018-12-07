@@ -1,15 +1,151 @@
-﻿import { moveSprite, flipHorizontally, scaleSprite, flipVertically } from "./CSSAnimation";
+﻿import { moveSprite, flipHorizontally, scaleSprite, flipVertically, setText, setFontSize, setBold, setItalic, setCentered } from "./CSSAnimation";
 
-export class Character {
+export class Entity {
     readonly id: string;
     readonly defImageURL: string;
-    private defName: string;
-    private defWidth: number;
-    private defHeight: number;
-    private defXOffset: number;
-    private defYOffset: number;
-    private defXAnchor: number; // set transform origin during creation of character in js
-    private defYAnchor: number; // set transform origin during creation of character in js
+    protected defName: string;
+    protected defWidth: number;
+    protected defHeight: number;
+    protected defXOffset: number;
+    protected defYOffset: number;
+    protected defXAnchor: number; // set transform origin during creation of character in js
+    protected defYAnchor: number; // set transform origin during creation of character in js
+
+    constructor(id: string, imageURL: string, name: string, width: number, height: number, xOffset: number, yOffset: number, xAnchor: number, yAnchor: number) {
+        this.id = id;
+        this.defImageURL = imageURL;
+        this.defName = name;
+        this.defWidth = width;
+        this.defHeight = height;
+        this.defXOffset = xOffset;
+        this.defYOffset = yOffset;
+        this.defXAnchor = xAnchor;
+        this.defYAnchor = yAnchor;
+    }
+}
+
+export class TextBox extends Entity {
+    private name: string = "";
+    private text: string = "";
+    private defNameFontSize: number = 1.5;
+    private nameFontSize: number = 1.5;
+    private defTextFontSize: number = 1.7;
+    private textFontSize: number = 1.7;
+    private isBold: boolean = false;
+    private isItalic: boolean = false;
+    private isSkippable: boolean = true;
+    private isCentered: boolean = false;
+    private textSpeed: number = 1;
+    private fontColor: string = "black";
+
+    constructor(id: string, imageURL: string, width: number, height: number, xOffset: number, yOffset: number, xAnchor: number, yAnchor: number) {
+        super(id, imageURL, "", width, height, xOffset, yOffset, xAnchor, yAnchor);
+    }
+
+    setName(name?: string): void {
+        try {
+            if (typeof name !== "string" && typeof name !== "undefined") throw new Error("Input Name format is wrong. ");
+            this.name = (typeof name === "string") ? name : "";
+            setText(this.id + "-name", this.name);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setNameFontSize(fontSize?: number):void {
+        try {
+            if (typeof fontSize !== "string" && typeof fontSize !== "undefined") throw new Error("Input Name Font Size format is wrong. ");
+            this.nameFontSize = (typeof fontSize === "number") ? fontSize : 1.5;
+            setFontSize(this.id + "-name", this.nameFontSize);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setFontSize(fontSize?: number): void {
+        try {
+            if (typeof fontSize !== "string" && typeof fontSize !== "undefined") throw new Error("Input Name format is wrong. ");
+            this.textFontSize = (typeof fontSize === "number") ? fontSize : 1.7;
+            setFontSize(this.id + "-name", this.textFontSize);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setBold(toBold?: boolean): void {
+        try {
+            if (typeof toBold !== "boolean" && typeof toBold !== "undefined") throw new Error("Input setBold format is wrong. ");
+            this.isBold = (typeof toBold === "boolean") ? toBold : false;
+            setBold(this.id + "-name", this.isBold);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setItalic(toItalic?: boolean): void {
+        try {
+            if (typeof toItalic !== "boolean" && typeof toItalic !== "undefined") throw new Error("Input setItalic format is wrong. ");
+            this.isItalic = (typeof toItalic === "boolean") ? toItalic : false;
+            setItalic(this.id + "-name", this.isItalic);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setSkippable(isSkippable?: boolean): void {
+        try {
+            if (typeof isSkippable !== "boolean" && typeof isSkippable !== "undefined") throw new Error("Input setSkippable format is wrong. ");
+            this.isSkippable = (typeof isSkippable === "boolean") ? isSkippable : false;
+            //need code
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setCentered(isCentered?: boolean): void {
+        try {
+            if (typeof isCentered !== "boolean" && typeof isCentered !== "undefined") throw new Error("Input setCentered format is wrong. ");
+            this.isSkippable = (typeof isCentered === "boolean") ? isCentered : false;
+            setCentered(this.id + "-name", this.isSkippable);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    setTextSpeed(textSpeed?: number): void {
+        try {
+            if ((typeof textSpeed !== "number" && typeof textSpeed !== "undefined") || (typeof textSpeed === "number" && textSpeed <= 0)) throw new Error("Input textSpeed format is wrong. ");
+            this.textSpeed = (typeof textSpeed === "number" && textSpeed <= 0) ? textSpeed : 1;
+            //need code
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    hexadecimalCheck(char: string):boolean {
+        let hexadecimalChar: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'A', 'B', 'C', 'D', 'E', 'F'];
+        if (hexadecimalChar.indexOf(char.toUpperCase()) < -1)  return false;
+        return true;
+    }
+
+    isHexadecimalColorCode(colorCode: string):boolean {
+        let resultArray: string[] = colorCode.split("").filter(x => this.hexadecimalCheck(x) == true);
+        if (resultArray.length == 6 && colorCode[0] == "#") return true;
+        if (["red", "black", "blue", "green", "yellow", "white", "grey"].indexOf(colorCode) >= 0) return true;
+        return false;
+    }
+
+    setFontColor(fontColor?: string): void {
+        try {
+            if ((typeof fontColor !== "string" && typeof fontColor !== "undefined") || (typeof fontColor === "string" && !this.isHexadecimalColorCode(fontColor))) throw new Error("Input fontColor format is wrong. ");
+            this.fontColor = (typeof fontColor === "string" && this.isHexadecimalColorCode(fontColor)) ? fontColor : "black";
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+}
+
+export class Character extends Entity {
     private defDirIsLeft: boolean;
     private imageURL: string;
     private name: string;
@@ -24,23 +160,15 @@ export class Character {
     private easingType: string[];
 
     constructor(id:string, imageURL:string, name:string, width:number, height:number, xOffset:number, yOffset:number, xAnchor:number, yAnchor:number, defDirIsLeft:boolean, easingType:string[]) {
-        this.id = id;
-        this.imageURL = imageURL;
+        super(id, imageURL, name, width, height, xOffset, yOffset, xAnchor, yAnchor);
         this.imageURL = imageURL;
         this.name = name;
-        this.defName = name;
         this.width = width;
-        this.defWidth = width;
         this.height = height;
-        this.defHeight = height;
         this.xOffset = xOffset;
-        this.defXOffset = xOffset;
         this.yOffset = yOffset;
-        this.defYOffset = yOffset;
         this.xAnchor = xAnchor;
-        this.defXAnchor = xAnchor;
-        this.yAnchor - yAnchor;
-        this.defYAnchor - yAnchor;
+        this.yAnchor = yAnchor;
         this.defDirIsLeft = defDirIsLeft;
         this.currDirIsLeft = defDirIsLeft;
         this.easingType = easingType;

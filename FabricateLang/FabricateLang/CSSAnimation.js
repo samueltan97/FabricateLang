@@ -26,4 +26,31 @@ function scaleSprite(id, scaleX, scaleY, time, animation, canSkip, promise) {
     }, time, animation, promise());
 }
 exports.scaleSprite = scaleSprite;
+function setText(id, text) {
+    $("#" + id).text(text);
+}
+exports.setText = setText;
+function setFontSize(id, fontSize) {
+    $("#" + id).css("font-size", fontSize.toString() + "vw");
+}
+exports.setFontSize = setFontSize;
+function setBold(id, toBold) {
+    var fontWeight = (toBold) ? "800" : "400";
+    $("#" + id).css("font-weight", fontWeight);
+}
+exports.setBold = setBold;
+function setItalic(id, toItalic) {
+    var fontItalic = (toItalic) ? "italic" : "normal";
+    $("#" + id).css("font-style", fontItalic);
+}
+exports.setItalic = setItalic;
+function setCentered(id, toCentered) {
+    var isCentered = (toCentered) ? "isCentered" : "";
+    $("#" + id).removeClass("isCentered").addClass(isCentered);
+}
+exports.setCentered = setCentered;
+function setFontColor(id, fontColor) {
+    $("#" + id).css("color", fontColor);
+}
+exports.setFontColor = setFontColor;
 //# sourceMappingURL=CSSAnimation.js.map
